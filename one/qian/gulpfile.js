@@ -11,15 +11,23 @@ gulp.task('sass',function() {
 })
 
 gulp.task('server',function() {
-	return gulp.src('src')
+	return gulp.src('./src/')
 	.pipe(server({
-		port : 8585,
 		open : true,
-		livereload :true,
+		port : '1211',
+		livereload : true,
 		proxies : [
-			{source : '/list' , target : 'http://localhost:3000/list'}
+			{source : '/list',target : 'http://localhost:3000/list'}
 		]
 	}))
 })
 
-gulp.task('watch',gulp.series('sass','server'))
+// gulp.task('watch',function() {
+//     gulp.watch('./src/scss/*.scss',gulp.series('sass'))
+// })
+
+gulp.task('watch',function() {
+	gulp.watch('./src/scss/**/*.scss',gulp.series('sass'));
+})
+
+gulp.task('dev',gulp.series('server','watch'));
